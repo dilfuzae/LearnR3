@@ -1,0 +1,24 @@
+library(here)
+
+mmash_link <- r3::mmash_data_link
+# download.file(mmash_link, destfile = here("data-raw/mmash-data.zip"))
+
+# Unzip
+unzip(here("data-raw/mmash-data.zip"),
+      exdir = here("data-raw"),
+      junkpaths = TRUE
+)
+Sys.sleep(1)
+unzip(here("data-raw/MMASH.zip"),
+      exdir = here("data-raw")
+)
+
+# Remove/tidy up left over files
+library(fs)
+file_delete(here(c(
+    "data-raw/MMASH.zip",
+    "data-raw/SHA256SUMS.txt",
+    "data-raw/LICENSE.txt"
+)))
+file_move(here("data-raw/DataPaper"), here("data-raw/mmash"))
+
