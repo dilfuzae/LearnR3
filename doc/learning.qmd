@@ -146,3 +146,32 @@ add_numbers <- function(num1, num2) {
 add_numbers(10, 20)
 ```
 
+## Import the user data with a function
+```{r}
+#' Import MMASH user info data
+#'
+#' @param file_path Path to user info data file.
+#'
+#' @return Output of imported info data
+import_user_info <- function(file_path) {
+  info_data <- read_csv(
+  file_path,
+  col_select = -1, # col skip (deletes the column)
+  col_types = cols(
+    col_skip(),
+    gender = col_character(),
+    weight = col_double(),
+    height = col_double(),
+    age = col_double()
+  ),
+  name_repair = snakecase::to_snake_case
+)
+
+return(info_data) 
+  
+}
+
+
+import_user_info(here("data-raw/mmash/user_1/user_info.csv"))
+```
+
