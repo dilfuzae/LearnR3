@@ -16,7 +16,7 @@ library(here)
 
 ```{r}
 # Code chunk
-user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv") 
+user_1_info_file <- here("data-raw/mmash/user_1/user_info.csv")
 
 user_1_info_data <- read_csv(
   user_1_info_file,
@@ -39,4 +39,56 @@ user_1_info_data <- read_csv(
 )
 
 spec(user_1_info_data)
+```
+
+## Exercise: Import the saliva data
+
+```{r}
+user_1_saliva_file <- here("data-raw/mmash/user_1/saliva.csv")
+
+user_1_saliva_data_prep <- read_csv(
+  user_1_saliva_file,
+  col_select = -1,
+  name_repair = snakecase::to_snake_case
+)
+spec(user_1_saliva_data_prep)
+
+# Basically this specifies columns about what they are: such as integers, decimals or characters while importing data so it won't create a problem afterwards
+user_1_saliva_data <- read_csv(
+  user_1_saliva_file,
+  col_select = -1,
+  col_types = cols(
+    col_skip(),
+    samples = col_character(),
+    cortisol_norm = col_double(),
+    melatonin_norm = col_double()
+  ),
+  name_repair = snakecase::to_snake_case
+)
+```
+
+## Importing larger datasets
+
+```{r}
+user_1_rr_file <- here("data-raw/mmash/user_1/RR.csv")
+user_1_rr_data_prep <- read_csv(
+  user_1_rr_file,
+  col_select = -1,
+  name_repair = snakecase::to_snake_case,
+  n_max = 100 # how many rows to read
+)
+
+spec(user_1_rr_data_prep)
+
+user_1_rr_data <- read_csv(
+  user_1_rr_file,
+  col_select = -1,
+  name_repair = snakecase::to_snake_case,
+  col_types = cols(
+    col_skip(),
+    ibi_s = col_double(),
+    day = col_integer(), # we can manually change in from double to integer
+    time = col_time(format = "")
+  )
+)
 ```
