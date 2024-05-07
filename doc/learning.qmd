@@ -24,9 +24,13 @@ user_info_files <- dir_ls(here("data-raw/mmash/"),
 
 
 ```{r}
-#purr is a part of tidyverse and we dont need to upload it usin librray cause it is already in depends
+#purrr is a part of tidyverse and we dont need to upload it usin librray cause it is already in depends
 user_info_list_df <- map(user_info_files, import_user_info) |>
   list_rbind(names_to = "file_path_id")
 user_info_list_df
+```
+## Exercise: Map on the other datasets
+```{r}
+
 ```
 
