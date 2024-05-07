@@ -37,3 +37,17 @@ summmarised_rr_df <- rr_df |>
     sd = \(x) sd(x, na.rm = TRUE)
   )), .groups = "drop")
 ```
+
+
+## Exercise: Summarise  Actigraph
+```{r}
+actigraph_df <- import_multiple_files("Actigraph.csv", import_actigraph)
+glimpse(actigraph_df)
+
+summarised_actigaph_df <- actigraph_df |>
+  group_by(file_path_id, day) |>
+  summarise(across(hr, list(
+    mean = \(x) mean(x, na.rm = TRUE),
+    sd = \(x) sd(x, na.rm = TRUE)
+  )), .groups = "drop")
+```
